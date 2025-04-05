@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Vim Motions for Chrome",
+  "version": "1.0",
+  "description": "Use vim motions when editing text anywhere within chrome",
+  "content_scripts": [
+    {
+      "js": ["content.js",
+      "handlers/textbox.js",
+      "handlers/contenteditable.js"],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "action": {
+    "default_icon" : "vimicon.png"}
+  }
+
