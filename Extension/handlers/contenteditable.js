@@ -32,6 +32,16 @@ function handleContentEditable(event, el) {
       event.preventDefault();
       moveCursorRightContentEditable();
       normal = false;
+  } else if (event.key === "b" && normal){
+      event.preventDefault();
+      gobackContentEditable();
+  } else if (event.key === "0" && normal){
+      event.preventDefault();
+      zerocont();
+  } else if (event.key == "A" && normal){
+      event.preventDefault();
+      capacont();
+      normal = false;
   } else if (normal === true){
       event.preventDefault();
   }
@@ -103,6 +113,35 @@ function nextwordContentEditable() {
   selection.addRange(range);
 }
 
+function gobackContentEditable() {
+  const selection = window.getSelection();
+  const range = selection.getRangeAt(0);
+  const linetext = getCurrentLineText();
+  const currentTextBeforeCaret = linetext.substring(0, range.startOffset);
+  const lastSpaceIndex = currentTextBeforeCaret.lastIndexOf(" ");
+  const newpos = (lastSpaceIndex === -1) ? 0 : lastSpaceIndex;
+  
+  range.setStart(range.startContainer, newpos);
+  range.setEnd(range.startContainer, newpos);
+  selection.addRange(range);
+}
+
+function zerocont() {
+  const selection = window.getSelection();
+  const range = selection.getRangeAt(0);
+  range.setStart(range.startContainer,0);
+  range.setEnd(range.startContainer,0);
+  selection.addRange(range);
+}
+
+function capacont() {
+  const selection = window.getSelection();
+  const range = selection.getRangeAt(0);
+  range.setStart(range.startContainer, getCurrentLineText().length);
+  range.setEnd(range.startContainer, getCurrentLineText().length);
+  selection.addRange(range);
+}
+
 
 // helper functions
 
@@ -145,4 +184,6 @@ function getPrevLineElement() {
   }
   return previous;
 }
+
+
 

@@ -2,11 +2,11 @@
 
 ---
 
-# Vim-like Keybindings for Browser Text Inputs (Alpha Version)
+# Vim-like Keybindings for Browser Text Inputs (Alpha v1.01)
 
 This Chrome extension provides Vim-like keybindings for navigating and editing text in various text input elements, such as standard text boxes, contenteditable fields, and virtual DOM-based text inputs (like Google Docs, VS Code, etc.). Currently in the alpha stage, this extension aims to bring a familiar and efficient text-editing experience to web-based text input fields.
 
-## Current Features (Alpha)
+## Current Features (Alpha v1.01)
 
 - **Insert Mode (`i`)**: Press `i` to switch to insert mode.
 - **Normal Mode (Backtick)**: Press the backtick (`` ` ``) to return to normal mode.
@@ -16,13 +16,16 @@ This Chrome extension provides Vim-like keybindings for navigating and editing t
   - Move Up (`k`): Move the cursor up by one line (works in contenteditable elements).
   - Move Down (`j`): Move the cursor down by one line (works in contenteditable elements).
   - Next Word (`w`): Move the cursor to the next word.
-  - Move Right (`a`): A combination of normal mode, but moves right and switches to insert mode.
+  - Previous Word (`b`) – *New in v1.01*
+  - Beginning of Line (`0`) – *New in v1.01*
+  - Append to End of Line (`A`) – *New in v1.01*
+  - Move Right and Switch to Insert Mode (`a`)
 
 ## Supported Input Types
 
 - **Standard Text Inputs** (`<input>`, `<textarea>`)
 - **Contenteditable Fields** (`<div contenteditable="true">`)
-- **Virtual DOM-based Text Inputs** (e.g., Google Docs, VS Code-like inputs - coming soon)
+- **Virtual DOM-based Text Inputs** (e.g., Google Docs, VS Code-like inputs – *coming soon*)
 
 ## Known Issues
 
@@ -35,14 +38,13 @@ These issues are known and will be addressed in future releases as the extension
 
 ## Future Releases
 
-- **Keybindings to be added**:
-  - `b` - Move the cursor back by one word.
-  - `e` - Move the cursor forward to the end of the current word.
-  - `0` - Move the cursor to the beginning of the line.
-  - `A` - Append to the end of the current line.
-  
-- **Additional Input Types**:
-  - Virtual DOM and other types of input fields will be supported in the future.
+- **Keybindings Planned**:
+  - `e` – Move the cursor forward to the end of the current word
+  - Additional commands to support full Vim motion and editing workflows
+
+- **Extended Input Support**:
+  - Virtual DOM-based inputs (Google Docs, VS Code, etc.)
+  - Broader support for mixed and dynamic input types
 
 The goal is to include most or all of the classic Vim keybindings in future releases.
 
@@ -57,5 +59,3 @@ The goal is to include most or all of the classic Vim keybindings in future rele
 ## License
 
 This project is in the early stages of development, and is available for use under the **MIT License**.
-
-

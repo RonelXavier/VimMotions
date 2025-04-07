@@ -26,6 +26,16 @@ function handleTextbox(event, el) {
   } else if (event.key === "w" && normal){
       event.preventDefault();
       nextword(el);
+  } else if (event.key === "b" && normal){
+      event.preventDefault();
+      goback(el);
+  } else if (event.key === "0" && normal){
+      event.preventDefault();
+      zero(el);
+  } else if (event.key === "A"&& normal){
+      event.preventDefault();
+      capA(el);
+      normal = false;
   } else if (normal === true){
     event.preventDefault();
   }
@@ -86,16 +96,51 @@ function moveCursorDown(el) {
 }
 
 
+
+
 function nextword(el) {
   const cpos = el.selectionStart;
-  const textaftercursor = el.value.substring(cpos);
-  const linesaftercursor = textaftercursor.split("\n");
-  const newpos = el.selectionStart + textaftercursor.indexOf(" ") + 1;
-  const altpos = linesaftercursor[0].length + cpos
-  if (!linesaftercursor[0].includes(" ")){
-    el.setSelectionRange(altpos, altpos)
-  } else {
-    el.setSelectionRange(newpos,newpos);}
+  const text = el.value.substring(cpos);
+  
+  let i = 0;
+  while (i < text.length && /\s/.test(text[i])) {
+    i++;
+  }
+  while (i < text.length && !/\s/.test(text[i])) {
+    i++;
+  }
+  el.setSelectionRange(cpos + i, cpos + i);
 }
 
+function goback(el) {
+  const cpos = el.selectionStart;
+  const text = el.value.substring(0, cpos);
+  if (!text) return;
+  // Start walking backward
+  let i = text.length - 1;
+  // Skip trailing spaces (like Vim does)
+  while (i > 0 && /\s/.test(text[i])) {
+    i--;
+  }
+  // Then skip backward until you hit the start of a word
+  while (i > 0 && !/\s/.test(text[i - 1])) {
+    i--;
+  }
+  el.setSelectionRange(i, i);
+}
 
+function zero(el) {
+  const cpos = el.selectionStart;
+  const text = el.value.substring(0,cpos);
+  const lines = text.split("\n");
+  const newpos = cpos - lines[lines.length - 1].length;
+  el.setSelectionRange(newpos,newpos);
+}
+
+function capA(el) {
+  const cpos = el.selectionStart;
+  const text = el.value.substring(cpos);
+  const lines = text.split("\n")
+  const newpos = cpos + lines[0].length;
+  el.setSelectionRange(newpos,newpos);
+}

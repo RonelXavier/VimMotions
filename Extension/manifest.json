@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Vim Motions for Chrome",
-  "version": "1.0",
-  "description": "Use vim motions when editing text anywhere within chrome",
+  "version": "1.01",
+  "description": "Vim-style keybindings for efficient text navigation and editing in browser inputs.",
   "content_scripts": [
     {
       "js": ["content.js",
@@ -13,6 +13,12 @@
       ]
     }
   ],
+  "icons": {
+  "16": "vimicon.png",
+  "32": "vimicon.png",
+  "48": "vimicon.png",
+  "128": "vimicon.png"
+  },
   "action": {
     "default_icon" : "vimicon.png"}
   }
