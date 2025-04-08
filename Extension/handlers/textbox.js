@@ -3,10 +3,12 @@ function handleTextbox(event, el) {
   if (event.key === "i" && normal) {
       event.preventDefault();
       console.log("You're in insert mode");
+      switchin(el);
       normal = false;
   } else if (event.key === "`" && !normal){
       event.preventDefault();
       console.log("you're back in normal mode");
+      switchnorm(el);
       normal = true;
   } else if (event.key === "h" && normal){
       event.preventDefault();
@@ -42,25 +44,46 @@ function handleTextbox(event, el) {
 }
 
 // keybind functions
+function switchnorm(input){
+  const start = input.selectionStart;
+  input.setSelectionRange(start-1, start);
+}
+
+function switchin(input){
+  const start = input.selectionStart;
+  input.setSelectionRange(start,start);
+}
 
 function movecursorleft(input){
     const pos = input.selectionStart;
     if (pos > 0) {
-            input.setSelectionRange(pos-1, pos-1);
+            input.setSelectionRange(pos-1, pos);
         }
     input.focus();
 }
 
-function movecursorright(input){
-    const pos = input.selectionStart;
-          input.setSelectionRange(pos+1,pos+1);
-    input.focus();
+function movecursorright(input) {
+  const start = input.selectionStart;
+  const end = input.selectionEnd;
+
+  if (end < input.value.length) {
+    if (start !== end){
+    input.setSelectionRange(start + 1, end + 1);
+    }
+    else {
+      input.setSelectionRange(start + 1, end + 2);
+    }
   }
+
+  input.focus();
+}
+
 
 function append(input){
     const pos = input.selectionStart;
-    if (pos > 0) {
-            input.setSelectionRange(pos+1, pos+1);
+    const cline = input.value.substring(pos).split("\n")[0].length + pos;
+  if (pos > 0) {
+            input.setSelectionRange(pos + 1, pos+1);
         }
     input.focus();
   normal = false;
@@ -75,7 +98,7 @@ function moveCursorUp(el) {
   const column = lines[cline].length;
   const pline = lines.length - 2;
   const newpos = Math.min(cpos - lines[pline].length - 1, cpos - column - 1);
-  el.setSelectionRange(newpos,newpos);
+  el.setSelectionRange(newpos,newpos+1);
 }
 
 function moveCursorDown(el) { 
@@ -92,14 +115,14 @@ function moveCursorDown(el) {
   } else {
     newpos = Math.min(cpos + linesaftercursor[0].length + linesaftercursor[1].length, cpos + skiptext + column);
   }
-  el.setSelectionRange(newpos, newpos);
+  el.setSelectionRange(newpos, newpos+1);
 }
 
 
 
 
 function nextword(el) {
-  const cpos = el.selectionStart;
+  const cpos = el.selectionEnd;
   const text = el.value.substring(cpos);
   
   let i = 0;
@@ -109,7 +132,7 @@ function nextword(el) {
   while (i < text.length && !/\s/.test(text[i])) {
     i++;
   }
-  el.setSelectionRange(cpos + i, cpos + i);
+  el.setSelectionRange(cpos + i - 1, cpos + i);
 }
 
 function goback(el) {
@@ -126,7 +149,7 @@ function goback(el) {
   while (i > 0 && !/\s/.test(text[i - 1])) {
     i--;
   }
-  el.setSelectionRange(i, i);
+  el.setSelectionRange(i, i + 1);
 }
 
 function zero(el) {
@@ -134,7 +157,7 @@ function zero(el) {
   const text = el.value.substring(0,cpos);
   const lines = text.split("\n");
   const newpos = cpos - lines[lines.length - 1].length;
-  el.setSelectionRange(newpos,newpos);
+  el.setSelectionRange(newpos,newpos+1);
 }
 
 function capA(el) {

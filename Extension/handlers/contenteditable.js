@@ -2,11 +2,19 @@ function handleContentEditable(event, el) {
     if (event.key === "i" && normal) {
       event.preventDefault();
       console.log("you're in insert mode");
+      const range = window.getSelection().getRangeAt(0);
+      range.setStart(range.startContainer, range.startOffset);
+      range.setEnd(range.startContainer, range.startOffset);
+      window.getSelection().addRange(range)
       normal = false;
     }
     else if (event.key === "`" && !normal) {
       event.preventDefault();
       console.log("you're back in normal mode")
+      const range = window.getSelection().getRangeAt(0);
+      range.setStart(range.startContainer, range.startOffset - 1);
+      range.setEnd(range.startContainer, range.startOffset + 1);
+      window.getSelection().addRange(range);
       normal = true;
     }
     else if (event.key === "h" && normal) {
@@ -30,7 +38,10 @@ function handleContentEditable(event, el) {
       nextwordContentEditable();
   } else if (event.key === "a" && normal){
       event.preventDefault();
-      moveCursorRightContentEditable();
+      const range = window.getSelection().getRangeAt(0);
+      range.setStart(range.startContainer, range.startOffset + 1);
+      range.setEnd(range.startContainer, range.startOffset);
+      window.getSelection().addRange(range);
       normal = false;
   } else if (event.key === "b" && normal){
       event.preventDefault();
@@ -54,7 +65,7 @@ function moveCursorLeftContentEditable() {
     const range = selection.getRangeAt(0);
     if (range.startOffset > 0) {
         range.setStart(range.startContainer, range.startOffset - 1);
-        range.setEnd(range.startContainer, range.startOffset);
+        range.setEnd(range.startContainer, range.startOffset + 1);
         selection.addRange(range);
     }
 }
@@ -65,8 +76,9 @@ function moveCursorRightContentEditable() {
     const node = range.startContainer;
     const textLength = node.textContent.length;
     if (range.startOffset >= textLength) return;
+    if (range.startOffset + 1 === textLength) return;
     range.setStart(range.startContainer, range.startOffset + 1);
-    range.setEnd(range.startContainer, range.startOffset);
+    range.setEnd(range.startContainer, range.startOffset + 1);
     selection.addRange(range);
 }
 
@@ -78,9 +90,9 @@ function moveCursorDownContentEditable() {
   if (!nextline) return;
   const textNode = nextline.firstChild;
   if (textNode && textNode.nodeType === Node.TEXT_NODE) {
-    const offset = Math.min(column, textNode.length); // Avoid going past the line's length
+    let offset = Math.min(column, textNode.length); // Avoid going past the line's length
     range.setStart(textNode, offset);
-    range.setEnd(textNode, offset);
+    range.setEnd(textNode, offset + 1);
     selection.addRange(range);
   } 
 }
@@ -95,7 +107,7 @@ function moveCursorUpContentEditable() {
   if (textNode && textNode.nodeType === Node.TEXT_NODE){
     const offset = Math.min(column, textNode.length);
     range.setStart(textNode, offset);
-    range.setEnd(textNode, offset);
+    range.setEnd(textNode, offset + 1);
     selection.addRange(range);
   }
 }
@@ -106,10 +118,12 @@ function nextwordContentEditable() {
   const linetext = getCurrentLineText();
   const currentTextAfterCaret = linetext.substring(range.startOffset);
   const nextSpaceIndex = currentTextAfterCaret.indexOf(" ");
-  const nextwordpos = (nextSpaceIndex === -1) ? linetext.length : range.startOffset + nextSpaceIndex + 1;
-
+  let nextwordpos = (nextSpaceIndex === -1) ? linetext.length : range.startOffset + nextSpaceIndex + 1;
+  if (nextwordpos === linetext.length){
+    --nextwordpos;
+  }
   range.setStart(range.startContainer, nextwordpos);
-  range.setEnd(range.startContainer, nextwordpos);
+  range.setEnd(range.startContainer, nextwordpos + 1);
   selection.addRange(range);
 }
 
@@ -121,7 +135,7 @@ function gobackContentEditable() {
   const lastSpaceIndex = currentTextBeforeCaret.lastIndexOf(" ");
   const newpos = (lastSpaceIndex === -1) ? 0 : lastSpaceIndex;
   
-  range.setStart(range.startContainer, newpos);
+  range.setStart(range.startContainer, newpos - 1);
   range.setEnd(range.startContainer, newpos);
   selection.addRange(range);
 }
@@ -130,7 +144,7 @@ function zerocont() {
   const selection = window.getSelection();
   const range = selection.getRangeAt(0);
   range.setStart(range.startContainer,0);
-  range.setEnd(range.startContainer,0);
+  range.setEnd(range.startContainer,1);
   selection.addRange(range);
 }
 
