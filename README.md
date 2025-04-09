@@ -1,5 +1,3 @@
-<img src="assets/img1.png" alt="Demo" style="width:75%;"/>
-
 # VimMotions
 
 ---
@@ -64,3 +62,8 @@ The goal is to include most or all of the classic Vim keybindings in future rele
 ## License
 
 This project is in the early stages of development, and is available for use under the **MIT License**.
+
+<img src="assets/img1.png" alt="Demo" style="width:75%;"/>
+
+<img src="assets/img2.png" alt="Demo" style="width:75%;"/>
+
