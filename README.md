@@ -1,3 +1,5 @@
+![title](assets/img1.png)
+
 # VimMotions
 
 ---
