@@ -1,4 +1,4 @@
-![title](assets/img1.png)
+<img src="assets/img1.png" alt="Demo" style="width:75%;"/>
 
 # VimMotions
 
