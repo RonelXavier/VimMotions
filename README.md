@@ -1,3 +1,4 @@
+
 # VimMotions
 
 ---
@@ -51,7 +52,14 @@ These issues are known and will be addressed in future releases as the extension
 
 The goal is to include most or all of the classic Vim keybindings in future releases.
 
-## Installation (for Development)
+## Installation
+
+### Install from Chrome Web Store
+
+VimMotions is now available on the [Chrome Web Store](https://chromewebstore.google.com/detail/ejggdgkfjmoggjddkbbmgpkhakgbghmg?utm_source=item-share-cb).  
+Click the link to install instantly and receive automatic updates.
+
+### Development Installation
 
 1. Clone or download the repository.
 2. Navigate to `chrome://extensions/` in your Chrome browser.
