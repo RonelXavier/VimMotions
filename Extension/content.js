@@ -1,4 +1,4 @@
-let normal = true;
+let normal = false;
 document.addEventListener("keydown", (event) => {
     const el = document.activeElement;
     if (!el) return;
