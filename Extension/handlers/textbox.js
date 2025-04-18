@@ -38,6 +38,9 @@ function handleTextbox(event, el) {
       event.preventDefault();
       capA(el);
       normal = false;
+  } else if (event.key === "x" && normal){
+	  event.preventDefault();
+	  delx(el);
   } else if (normal === true){
     event.preventDefault();
   }
@@ -139,13 +142,10 @@ function goback(el) {
   const cpos = el.selectionStart;
   const text = el.value.substring(0, cpos);
   if (!text) return;
-  // Start walking backward
   let i = text.length - 1;
-  // Skip trailing spaces (like Vim does)
   while (i > 0 && /\s/.test(text[i])) {
     i--;
   }
-  // Then skip backward until you hit the start of a word
   while (i > 0 && !/\s/.test(text[i - 1])) {
     i--;
   }
@@ -154,6 +154,7 @@ function goback(el) {
 
 function zero(el) {
   const cpos = el.selectionStart;
+  console.log(el.value);
   const text = el.value.substring(0,cpos);
   const lines = text.split("\n");
   const newpos = cpos - lines[lines.length - 1].length;
@@ -166,4 +167,10 @@ function capA(el) {
   const lines = text.split("\n")
   const newpos = cpos + lines[0].length;
   el.setSelectionRange(newpos,newpos);
+}
+
+function delx(el) {
+  const cpos = el.selectionStart;
+  el.value = el.value.substring(0,el.selectionStart) + el.value.substring(el.selectionEnd);
+  el.setSelectionRange(cpos, cpos + 1);
 }

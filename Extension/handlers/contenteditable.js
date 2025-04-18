@@ -49,11 +49,15 @@ function handleContentEditable(event, el) {
   } else if (event.key === "0" && normal){
       event.preventDefault();
       zerocont();
-  } else if (event.key == "A" && normal){
+  } else if (event.key === "A" && normal){
       event.preventDefault();
       capacont();
       normal = false;
-  } else if (normal === true){
+  } else if (event.key === "x" && normal){
+	  event.preventDefault();
+	  delxcont();
+  }
+    else if (normal === true){
       event.preventDefault();
   }
 }
@@ -154,6 +158,16 @@ function capacont() {
   range.setStart(range.startContainer, getCurrentLineText().length);
   range.setEnd(range.startContainer, getCurrentLineText().length);
   selection.addRange(range);
+}
+
+function delxcont() {
+	const selection = window.getSelection();
+	const range = selection.getRangeAt(0);
+	const startoff = range.startOffset;
+	range.deleteContents();
+	range.setStart(range.startContainer, startoff);
+	range.setEnd(range.startContainer, startoff + 1);
+	selection.addRange(range);
 }
 
 
