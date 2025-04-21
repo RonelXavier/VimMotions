@@ -25,7 +25,7 @@ function handleTextbox(event, el) {
   } else if (event.key === "j" && normal){
       event.preventDefault();
       moveCursorDown(el);
-  } else if (event.key === "w" && normal){
+  } else if (event.key === "w" && normal && !delmode){
       event.preventDefault();
       nextword(el);
   } else if (event.key === "b" && normal){
@@ -41,6 +41,12 @@ function handleTextbox(event, el) {
   } else if (event.key === "x" && normal){
 	  event.preventDefault();
 	  delx(el);
+  } else if (event.key === "d" && normal && !delmode){
+	  event.preventDefault();
+	  delmode = true;
+  } else if (event.key === "w" && normal && delmode){
+	  event.preventDefault();
+	  delword(el);
   } else if (normal === true){
     event.preventDefault();
   }
@@ -174,3 +180,17 @@ function delx(el) {
   el.value = el.value.substring(0,el.selectionStart) + el.value.substring(el.selectionEnd);
   el.setSelectionRange(cpos, cpos + 1);
 }
+
+function delword(el) {
+  const cpos = el.selectionStart;
+  const spaceIndex = el.value.substring(cpos).indexOf(" ");
+  if (spaceIndex !== -1) {
+    el.value = el.value.substring(0,cpos) + el.value.substring(cpos + spaceIndex);
+  }
+  else {
+    el.value = el.value.substring(0,cpos);
+  }
+  el.setSelectionRange(cpos - 1, cpos);
+  delmode = false;
+}
+

@@ -33,7 +33,7 @@ function handleContentEditable(event, el) {
       event.preventDefault();
       moveCursorDownContentEditable();
     }
-    else if (event.key === "w" && normal){
+    else if (event.key === "w" && normal && !delmode){
       event.preventDefault();
       nextwordContentEditable();
   } else if (event.key === "a" && normal){
@@ -56,6 +56,12 @@ function handleContentEditable(event, el) {
   } else if (event.key === "x" && normal){
 	  event.preventDefault();
 	  delxcont();
+  } else if (event.key === "d" && normal && !delmode) {
+	  event.preventDefault();
+	  delmode = true;
+  } else if (event.key === "w" && normal && delmode){
+	  event.preventDefault();
+	  delwordcont();
   }
     else if (normal === true){
       event.preventDefault();
@@ -138,7 +144,7 @@ function gobackContentEditable() {
   const currentTextBeforeCaret = linetext.substring(0, range.startOffset);
   const lastSpaceIndex = currentTextBeforeCaret.lastIndexOf(" ");
   const newpos = (lastSpaceIndex === -1) ? 0 : lastSpaceIndex;
-  
+ 
   range.setStart(range.startContainer, newpos - 1);
   range.setEnd(range.startContainer, newpos);
   selection.addRange(range);
@@ -170,7 +176,29 @@ function delxcont() {
 	selection.addRange(range);
 }
 
+function delwordcont() {
+  const selection = window.getSelection();
+  const range = selection.getRangeAt(0);
+  const cpos = range.startOffset;
+  const text = range.startContainer.textContent;
+  const spaceindex = text.substring(cpos).indexOf(" ") + cpos;
 
+  if (text.substring(cpos).indexOf(" ") !== -1){
+  range.setStart(range.startContainer,cpos);
+  range.setEnd(range.startContainer,spaceindex);
+  range.deleteContents();}
+  else {
+  range.setStart(range.startContainer,cpos);
+  range.setEnd(range.startContainer,getCurrentLineText().length);
+  selection.addRange(range);
+  range.deleteContents();
+  }
+  delmode = false;
+}
+
+function dellinecont() {
+  
+}
 // helper functions
 
 function getCurrentLineElement() {
