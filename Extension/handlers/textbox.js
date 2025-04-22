@@ -47,6 +47,9 @@ function handleTextbox(event, el) {
   } else if (event.key === "w" && normal && delmode){
 	  event.preventDefault();
 	  delword(el);
+  } else if (event.key === "d" && normal && delmode){
+	  event.preventDefault();
+	  delline(el);
   } else if (normal === true){
     event.preventDefault();
   }
@@ -194,3 +197,16 @@ function delword(el) {
   delmode = false;
 }
 
+function delline(el){
+  const cpos = el.selectionStart;
+  let before = el.value.substring(0,cpos).lastIndexOf("\n");
+  let after = el.value.substring(cpos).indexOf("\n");
+  if (after === -1){
+  after = el.value.length
+  }
+  if (before === -1){
+  before = 0
+  }
+  el.value = el.value.substring(0,before) + el.value.substring(cpos + after);
+  delmode = false;
+}

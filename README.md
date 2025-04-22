@@ -26,6 +26,7 @@ This Chrome extension provides Vim-like keybindings for navigating and editing t
   - Move Right and Switch to Insert Mode (`a`)
   - Delete Character (`x`) *Added in v1.022*
   - Delete Word (`dw`) *Added in v1.022*
+  - Delete Line (`dd`) *Added in v1.022*
 
 ## Supported Input Types
 

@@ -62,6 +62,9 @@ function handleContentEditable(event, el) {
   } else if (event.key === "w" && normal && delmode){
 	  event.preventDefault();
 	  delwordcont();
+  } else if (event.key === "d" && normal && delmode){
+	  event.preventDefault();
+	  dellinecont();
   }
     else if (normal === true){
       event.preventDefault();
@@ -197,7 +200,11 @@ function delwordcont() {
 }
 
 function dellinecont() {
-  
+  const selection = window.getSelection();
+  const range = selection.getRangeAt(0);
+  range.setStart(range.startContainer,0);
+  range.setEnd(range.startContainer, getCurrentLineText().length)
+  range.deleteContents();
 }
 // helper functions
 
