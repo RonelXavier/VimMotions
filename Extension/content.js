@@ -1,5 +1,6 @@
 let normal = false;
 let delmode = false;
+let gmode = false;
 document.addEventListener("keydown", (event) => {
     const el = document.activeElement;
     if (!el) return;

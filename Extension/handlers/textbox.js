@@ -209,4 +209,9 @@ function delline(el){
   }
   el.value = el.value.substring(0,before) + el.value.substring(cpos + after);
   delmode = false;
+  el.setSelectionRange(before - 1,before);
+}
+
+function jumptop(el){
+  el.setSelectionRange(0,1);
 }
