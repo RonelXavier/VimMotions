@@ -47,7 +47,6 @@ These issues are known and will be addressed in future releases as the extension
 
 - **Keybindings Planned**:
   - `e` – Move the cursor forward to the end of the current word
-  - `dd` - Delete current line
   - `r` - Replace current Character
   - `G` - Move cursor to end of text
   - `gg` - Move cursor to beginning of text
