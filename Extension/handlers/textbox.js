@@ -50,6 +50,15 @@ function handleTextbox(event, el) {
   } else if (event.key === "d" && normal && delmode){
 	  event.preventDefault();
 	  delline(el);
+  } else if (event.key === "g" && normal && !gmode){
+	  event.preventDefault();
+	  gmode = true;
+  } else if (event.key === "g" && normal && gmode){
+	  event.preventDefault();
+	  jumptop(el);
+  } else if (event.key === "G" && normal){
+	  event.preventDefault();
+	  jumpend(el);
   } else if (normal === true){
     event.preventDefault();
   }
@@ -214,4 +223,9 @@ function delline(el){
 
 function jumptop(el){
   el.setSelectionRange(0,1);
+  gmode = false;
+}
+
+function jumpend(el){
+  el.setSelectionRange(el.value.length - 1, el.value.length);
 }
