@@ -7,6 +7,10 @@
 
 This Chrome extension provides Vim-like keybindings for navigating and editing text in various text input elements, such as standard text boxes, contenteditable fields, and virtual DOM-based text inputs (like Google Docs, VS Code, etc.). Currently in the alpha stage, this extension aims to bring a familiar and efficient text-editing experience to web-based text input fields.
 
+
+https://github.com/user-attachments/assets/20addd85-0549-4404-918f-7b27b7d433fe
+
+
 ## Current Features (Alpha v1.022)
 
 - **Insert Mode (`i`)**: Press `i` to switch to insert mode.
