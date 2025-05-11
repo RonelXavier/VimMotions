@@ -47,6 +47,7 @@ function handleTextbox(event, el) {
   } else if (event.key === "w" && normal && delmode){
 	  event.preventDefault();
 	  delword(el);
+	  delmode = false;
   } else if (event.key === "d" && normal && delmode){
 	  event.preventDefault();
 	  delline(el);
